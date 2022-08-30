@@ -1,5 +1,5 @@
 @extends('app')
-@section('title') Pages @endsection
+@section('title') Page List @endsection
 
 @section('content')
 <div class="container">
@@ -7,6 +7,11 @@
         <h2>Page List</h2>
         <p class="lead"><a href="{{route('pages.create')}}" class="btn btn-outline-info btn-md px-4 me-sm-3 fw-bold">Create Page</a></p>
       </div>
+      @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{ Session::get('success') }}
+        </div>
+      @endif
       <div class="row">
             <table class="table table-striped">
                 <thead>
@@ -49,3 +54,38 @@
       </div>
   </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.19.1/sweetalert2.all.js"></script>
+    <script type="text/javascript">
+        function deletePost(id) {
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault();
+                    document.getElementById('delete-form-'+id).submit();
+                } else if (
+                    result.dismiss === swal.DismissReason.cancel
+                ) {
+                    swal(
+                        'Cancelled',
+                        'Your data is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    </script>
+@endpush

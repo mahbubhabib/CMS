@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +19,5 @@ Route::get('/create', [PageController::class, 'create'])->name('pages.create');
 Route::post('/store', [PageController::class, 'store'])->name('pages.store');
 Route::get('/show/{slug}', [PageController::class, 'show'])->where('slug', '.*')->name('pages.show');
 Route::get('/{id}/edit', [PageController::class, 'edit'])->name('pages.edit');
-Route::post('/update/{id}', [PageController::class, 'update'])->name('pages.update');
+Route::post('/update', [PageController::class, 'update'])->name('pages.update');
 Route::delete('/{id}/destroy', [PageController::class, 'destroy'])->name('pages.destroy');

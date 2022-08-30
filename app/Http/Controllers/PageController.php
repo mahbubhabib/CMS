@@ -7,6 +7,7 @@ use App\Models\Page;
 use DB;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
 
 class PageController extends Controller
 {
@@ -44,19 +45,25 @@ class PageController extends Controller
     {
         DB::beginTransaction();
         try{
-            $this->validate($request, [
+            $rules = array(
                 'title'             =>  'required|max:191',
                 'content'           =>  'required',
                 'parent_id'         =>  'required',
-            ]);
+            );
 
-            Page::create($request->all());
-            DB::commit();
+            $validator = Validator::make ( $request->all(), $rules);
 
-            return redirect()->route('pages.index')->with('success', 'Page has been added successfully!');
-        }catch(Exception $ex){
+            if ($validator->fails())
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            else {
+                $page = Page::create($request->all());
+
+                DB::commit();
+                return response()->json(['success' => $page, "error" => "", 'message' => 'Page has been added successfully!']);
+            }
+        }catch(Exception $e){
             DB::rollBack();
-            return redirect()->back();
+            return response()->json($e);
         }
     }
 
@@ -110,23 +117,30 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         DB::beginTransaction();
         try{
-            $this->validate($request, [
+            $rules = array(
                 'title'             =>  'required|max:191',
                 'content'           =>  'required',
                 'parent_id'         =>  'required',
-            ]);
+            );
 
-            Page::findOrFail($id)->update($request->all());
-            DB::commit();
+            $validator = Validator::make ( $request->all(), $rules);
 
-            return redirect()->route('pages.index')->with('success', 'Page has been updated successfully!');
-        }catch(Exception $ex){
+            if ($validator->fails())
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            else {
+                $page = Page::findOrFail($request->id)->update($request->all());
+
+                DB::commit();
+                return response()->json(['success' => $page, "error" => "", 'message' => 'Page has been updated successfully!']);
+            }
+
+        }catch(Exception $e){
             DB::rollBack();
-            return redirect()->back();
+           return response()->json($e);
         }
     }
 

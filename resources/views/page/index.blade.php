@@ -27,6 +27,9 @@
                     @php $i = 1; @endphp
                     @forelse($pages as $item)
                         @if($item->parent != NULL)
+                        @php
+                            $slug = $item->parent->slug.'/'.$item->slug
+                        @endphp
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $item->parent->title ?? 'N/A' }}</td>
@@ -35,7 +38,7 @@
 
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="Second group">
-                                    <a href="{{ route('pages.show', $item->getAncestorsAndSelf()->pluck('slug')->implode('/')) }}" class="btn btn-sm btn-info text-white">View</i></a>
+                                    <a href="{{ route('pages.show', $slug) }}" class="btn btn-sm btn-info text-white">View</i></a>
                                     <a href="{{ route('pages.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</i></a>
                                     <a href="#" class="btn btn-sm btn-danger" onclick="deletePost({{ $item->id }})">Delete</i></a>
                                     <form id="delete-form-{{ $item->id }}" action="{{ route('pages.destroy', $item->id) }}" method="POST" style="display: none;">

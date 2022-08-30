@@ -17,17 +17,17 @@ DollaBills is an online platform where people can pay for content (photos and vi
 
 - cd to project directory: $ `cd CMS`
 
-- Create your onlynudez/.env file by editing provided onlynudez/.env.example with $ `cp .env.example .env`
+- Create your CMS/.env file by editing provided CMS/.env.example with $ `cp .env.example .env`
 
 - Install vendor files with composer: $ `composer install`
 
 - Generate key for .env using this command: $ `php artisan key:generate`
 
-- Create `database` in your localhost name - `CMS`
+- Create `database` in your localhost name - `cms`
 
-- Config database in your `.env` file `DB_DATABASE=CMS`
+- Config database in your `.env` file `DB_DATABASE=cms`
 
-- Install database schema & default data: $ `php artisan migrate`
+- Install database schema & default data: $ `php artisan migrate --seed`
 
 - Run this command for serve your project in localhost: $ `php artisan serve`
 

@@ -1,5 +1,5 @@
 @extends('app')
-@section('title') Pages @endsection
+@section('title') Page Create @endsection
 
 @section('content')
 <div class="container">
@@ -16,16 +16,12 @@
                 <div class="form-group">
                     <label class="control-label" for="title">Title <span class="m-l-5 text-danger"> *</span></label>
                     <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" id="title" value="{{ old('title') }}"/>
-                    <div class="invalid-feedback active">
-                        <i class="fa fa-exclamation-circle fa-fw"></i> @error('title') <span>{{ $message }}</span> @enderror
-                    </div>
+                     @error('title') <i class="fa fa-exclamation-circle fa-fw"></i> <span>{{ $message }}</span> @enderror
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="content">Content<span class="text-danger"> *</span></label>
                     <textarea class="form-control @error('content') is-invalid @enderror" rows="4" name="content" id="content">{{ old('content') }}</textarea>
-                    <div class="invalid-feedback active">
-                        <i class="fa fa-exclamation-circle fa-fw"></i> @error('content') <span>{{ $message }}</span> @enderror
-                    </div>
+                    @error('content') <i class="fa fa-exclamation-circle fa-fw"></i> <span>{{ $message }}</span> @enderror
                 </div>
 
                 <div class="form-group">
@@ -54,9 +50,7 @@
                                         @endforeach
                                 @endforeach
                     </select>
-                    <div class="invalid-feedback active">
-                        <i class="fa fa-exclamation-circle fa-fw"></i> @error('parent_id') <span>{{ $message }}</span> @enderror
-                    </div>
+                    @error('parent_id') <i class="fa fa-exclamation-circle fa-fw"></i> <span>{{ $message }}</span> @enderror
                 </div>
             </div>
             <div class="tile-footer">

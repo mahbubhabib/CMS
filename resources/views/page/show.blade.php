@@ -1,11 +1,10 @@
 @extends('app')
-@section('title') Pages @endsection
+@section('title') {{$page->title ?? 'N/A'}} @endsection
 
 @section('content')
 <div class="container">
     <div class="py-5 text-center">
-        <h2>Page List</h2>
-        <p class="lead">{{$page->title ?? 'N/A'}}</p>
+        <h2>{{$page->title ?? 'N/A'}}</h2>
       </div>
       <div class="row">
            {!! $page->content ?? 'N/A' !!}

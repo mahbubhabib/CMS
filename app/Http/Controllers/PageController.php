@@ -45,15 +45,15 @@ class PageController extends Controller
         DB::beginTransaction();
         try{
             $this->validate($request, [
-                'title'      =>  'required|max:191',
-                'content'      =>  'required',
-                'parent_id'      =>  'required',
+                'title'             =>  'required|max:191',
+                'content'           =>  'required',
+                'parent_id'         =>  'required',
             ]);
 
             Page::create($request->all());
             DB::commit();
 
-            return redirect()->route('pages.index')->with([ 'alert-type' => 'success','message' => 'Category added successfully']);
+            return redirect()->route('pages.index')->with('success', 'Page has been added successfully!');
         }catch(Exception $ex){
             DB::rollBack();
             return redirect()->back();
@@ -97,7 +97,10 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pages = Page::all();
+        $page = Page::findOrFail($id);
+
+        return view('page.edit',compact('pages','page'));
     }
 
     /**
@@ -109,7 +112,22 @@ class PageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $this->validate($request, [
+                'title'             =>  'required|max:191',
+                'content'           =>  'required',
+                'parent_id'         =>  'required',
+            ]);
+
+            Page::findOrFail($id)->update($request->all());
+            DB::commit();
+
+            return redirect()->route('pages.index')->with('success', 'Page has been updated successfully!');
+        }catch(Exception $ex){
+            DB::rollBack();
+            return redirect()->back();
+        }
     }
 
     /**
@@ -120,6 +138,7 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Page::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Page has been deleted successfully!');
     }
 }

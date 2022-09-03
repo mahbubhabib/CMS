@@ -1,5 +1,3 @@
-DollaBills is an online platform where people can pay for content (photos and videos, live streams) via a monthly membership. Content is mainly created by YouTubers, fitness trainers, models, content creators, public figures, in order to monetise their profession.
-
 ## Installation
 **Requirements**
 - PHP 7.4 +
